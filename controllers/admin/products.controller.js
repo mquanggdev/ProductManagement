@@ -1,6 +1,20 @@
 const Product = require("../../model/product.model");
 //GET /admin/products
 module.exports.index = async (req,res) => {
+    const filterStatus = [
+        {
+            label: "Tất cả" ,
+            value: ""
+        },
+        {
+            label: "Hoạt động" ,
+            value: "active"
+        },
+        {
+            label: "Dừng hoạt động" ,
+            value: "inactive"
+        },
+    ] 
     const find = {
         deleted : false
     };
@@ -17,6 +31,7 @@ module.exports.index = async (req,res) => {
     res.render("admin/pages/products/index.pug" , {
         pageTitle : "Trang Admin Sản Phẩm " , 
         products : products,
-        keyword : keyword
+        keyword : keyword,
+        filterStatus: filterStatus
     });
 }
