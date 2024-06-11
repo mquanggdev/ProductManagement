@@ -1,5 +1,6 @@
 extends ../../layout/default.pug
 include ../../mixin/filter-status.pug
+include ../../mixin/form-search.pug
 block main
   h1(class="mb-4") Quản lý sản phẩm
   .card.mb-3
@@ -9,20 +10,7 @@ block main
         .col-6
           +filter-status(filterStatus)
         .col-6
-          form(form-search = "")
-            .input-group
-              input(
-                type="text"
-                placeholder="Nhập từ khóa"
-                name="keyword"
-                class="form-control"
-                value=keyword
-              )
-              .input-group-append
-                button(
-                  class="btn btn-success"
-                  type="submit"
-                ) Tìm
+          +form-search(keyword)
 
   .card.mb-3
     .card-header Danh sách
