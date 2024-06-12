@@ -51,3 +51,14 @@ module.exports.index = async (req,res) => {
         pagination: pagination
     });
 }
+//[get] /admin/products/change-status/:id
+module.exports.changeStatus = async (req , res) => {
+    // console.log(req.params) // tất cả các biến động thì sẽ được lưu vào thằng params
+    const {id,statusChange} = req.params;
+    await Product.updateOne({
+        _id : id
+    },{
+        status: statusChange
+    }) // obj đầu tiên là thông tin bản ghi cần thay thế , obj2 là cái mà ta sẽ thay thế
+    res.redirect("back"); // chuyển hướng sang đường dẫn này - khác hẳn với render : trong trường hợp này ta chỉ thay đổi trạng thái nên ta sẽ ở nguyên trang đó => dùng back
+}
