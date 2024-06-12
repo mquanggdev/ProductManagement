@@ -39,3 +39,18 @@ if (formSearch){
     })
 }
 //end form search
+
+// Phân trang
+const ArrayButtonPagination = document.querySelectorAll("[button-pagination");
+if ( ArrayButtonPagination.length > 0 ){
+    const url = new URL(window.location.href);
+    ArrayButtonPagination.forEach(button => {
+        button.addEventListener("click" , () => {
+            const page = button.getAttribute("button-pagination");
+            url.searchParams.set("page",page);
+            window.location.href = url.href
+        })
+       
+    })
+}
+// End Phân Trang
