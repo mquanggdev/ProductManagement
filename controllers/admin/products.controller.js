@@ -1,4 +1,5 @@
 const Product = require("../../model/product.model");
+const paginationHelper = require("../../helper/pagination.helper");
 //GET /admin/products
 module.exports.index = async (req,res) => {
     const filterStatus = [
@@ -23,7 +24,7 @@ module.exports.index = async (req,res) => {
         find.status = req.query.status;
       }
     // end  trạng thái
-    
+    const pagination = await paginationHelper(req , find);
     // tìm kiếm
     var keyword = "" ;
     if (req.query.keyword){
@@ -35,16 +36,7 @@ module.exports.index = async (req,res) => {
 
 
     // Phân trang
-    const pagination = {
-        currentPage: 1,
-        limitItems : 4, // mỗi trang có 4 phần tử
-    };
-    if (req.query.page){
-        pagination.currentPage = parseInt(req.query.page);
-    }
-    pagination.skip = (pagination.currentPage - 1) * (pagination.limitItems); // bỏ qua bao nhiêu trang
-    const allProductFind = await Product.countDocuments(find);
-    pagination.totalPage = Math.ceil(allProductFind / pagination.limitItems);
+    
      // end Phân trang
     const products = await Product
         .find(find)
