@@ -2,6 +2,7 @@ extends ../../layout/default.pug
 include ../../mixin/filter-status.pug
 include ../../mixin/form-search.pug
 include ../../mixin/pagination.pug
+include ../../mixin/box-actions.pug
 block main
   h1(class="mb-4") Quản lý sản phẩm
   .card.mb-3
@@ -15,13 +16,7 @@ block main
   .card.mb-3
     .card-header Chuyển Trạng Thái
     .card-body 
-      div(class = "input-group" box-actions)
-        select(class = "custom-select")
-          option(selected='') Chọn Trạng Thái...
-          option(value='active') Hoạt Động
-          option(value='inactive') Dừng Hoạt Động
-        .input-group-append
-          button.btn.btn-outline-secondary(type='button') Áp Dụng
+      +box-mixin-actions(`/${prefixAdmin}/products/change-multi`)
 
   .card.mb-3
     .card-header Danh sách
