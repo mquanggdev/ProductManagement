@@ -51,7 +51,7 @@ module.exports.index = async (req,res) => {
         pagination: pagination
     });
 }
-//[Patch] /admin/products/change-status/:id
+//[Patch] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req , res) => {
     // console.log(req.params) // tất cả các biến động thì sẽ được lưu vào thằng params
     const {id,statusChange} = req.params; // thằng này thì lấy thẳng từ link
@@ -71,6 +71,16 @@ module.exports.changeMulti = async (req , res) => {
         _id : ids
     },{
         status: status
+    }) 
+    res.json({
+        code : 200
+    });
+}
+//[Delete] /admin/products/delete:id
+module.exports.deleteItem = async (req , res) => {
+    const id = req.params.id;
+    await Product.deleteOne({
+        _id : id
     }) 
     res.json({
         code : 200

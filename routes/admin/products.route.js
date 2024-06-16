@@ -4,4 +4,5 @@ const controller = require("../../controllers/admin/products.controller")
 router.get("/" , controller.index);
 router.patch("/change-status/:statusChange/:id",controller.changeStatus) // :id tức là đặt đường dẫn động có tên là id
 router.patch("/change-multi",controller.changeMulti)
+router.delete("/delete/:id" , controller.deleteItem);
 module.exports = router
