@@ -78,3 +78,31 @@ if ( listButtonChangeStatus.length > 0) {
     })
 }
 // end button change status
+
+
+// Logic khi ấn ô checkbox chọn các sản phẩm
+const inputCheckAll = document.querySelector("input[name = 'checkAll']");
+const listInputCheckItem = document.querySelectorAll("input[name = 'checkItem']");
+    // khi mà click vào nút checkall thì các nút checkitem sẽ được check
+if(inputCheckAll && listInputCheckItem){
+    inputCheckAll.addEventListener("click" , () => {
+    
+            listInputCheckItem.forEach(item => {
+                item.checked = inputCheckAll.checked
+            })
+        }
+    )
+}
+    // khi click chọn tất cả các nút checkitem thì nút checkall cũng sẽ được chọn theo , hoặc khi bỏ chọn 1 nut checkitem nào đó thì nút checkall cũng sẽ bỏ tích theo
+listInputCheckItem.forEach(item => {
+    item.addEventListener("click" , () => {
+        const listInputCheckedItem = document.querySelectorAll("input[name = 'checkItem']:checked");
+        if (listInputCheckItem.length == listInputCheckedItem.length){
+            inputCheckAll.checked = true;
+        }
+        else{
+            inputCheckAll.checked = false ;
+        }
+    })
+})
+// end Logic khi ấn ô checkbox chọn các sản phẩm
