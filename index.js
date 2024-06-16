@@ -1,4 +1,5 @@
 const express = require('express');
+var bodyParser = require('body-parser');
 const app = express();
 require('dotenv').config();
 const routeClient = require("./routes/client/index.route");
@@ -12,6 +13,8 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 app.use(express.static("public"));
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+// parse application/json
+app.use(bodyParser.json())
 
 routeClient(app);
 routeAdmin(app);

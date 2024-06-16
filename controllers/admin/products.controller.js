@@ -54,7 +54,7 @@ module.exports.index = async (req,res) => {
 //[Patch] /admin/products/change-status/:id
 module.exports.changeStatus = async (req , res) => {
     // console.log(req.params) // tất cả các biến động thì sẽ được lưu vào thằng params
-    const {id,statusChange} = req.params;
+    const {id,statusChange} = req.params; // thằng này thì lấy thẳng từ link
     await Product.updateOne({
         _id : id
     },{
@@ -66,8 +66,13 @@ module.exports.changeStatus = async (req , res) => {
 }
 //[Patch] /admin/products/change-multi
 module.exports.changeMulti = async (req , res) => {
-    
-    res.json({ // thằng này là thằng mà ta muốn gửi khi mà ta fetch link
+    const {status,ids} = req.body; // thằng này lấy từ body về
+    await Product.updateMany({
+        _id : ids
+    },{
+        status: status
+    }) 
+    res.json({
         code : 200
     });
 }
