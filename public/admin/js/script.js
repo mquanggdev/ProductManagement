@@ -106,3 +106,42 @@ listInputCheckItem.forEach(item => {
     })
 })
 // end Logic khi ấn ô checkbox chọn các sản phẩm
+
+// box action
+const boxActions = document.querySelector("[box-actions]");
+if(boxActions){
+    const buttonApply = boxActions.querySelector("button");
+    const selectApply = boxActions.querySelector("select");
+    buttonApply.addEventListener("click" , () => {
+        const status = selectApply.value;
+        const listInputCheckedItem = document.querySelectorAll("input[name = 'checkItem']:checked");
+
+        const ids = [];
+        listInputCheckedItem.forEach(elements => {
+            ids.push(elements.value);
+        })
+
+        if ( status != "" && ids.length > 0){
+            const data = {
+                status : status ,
+                ids : ids
+            }
+            fetch("/admin/products/change-multi" , {
+                method: "PATCH",
+                headers: {
+                    "Content-type":"application/json",
+                },
+                body : JSON.stringify(data) 
+            })
+            .then (res => res.json())
+            .then (data => {
+                if (data.code == 200){
+                    window.location.reload();
+                }
+            })
+        } else {
+            console.log("Chưa chọn hành động và sản phẩm");
+        }
+    })
+}
+// end box action

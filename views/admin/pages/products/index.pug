@@ -12,6 +12,16 @@ block main
           +filter-status(filterStatus)
         .col-6
           +form-search(keyword)
+  .card.mb-3
+    .card-header Chuyển Trạng Thái
+    .card-body 
+      div(class = "input-group" box-actions)
+        select(class = "custom-select")
+          option(selected='') Chọn Trạng Thái...
+          option(value='1') Hoạt Động
+          option(value='2') Dừng Hoạt Động
+        .input-group-append
+          button.btn.btn-outline-secondary(type='button') Áp Dụng
 
   .card.mb-3
     .card-header Danh sách
@@ -20,7 +30,10 @@ block main
         thead
           tr
             th
-              input(type="checkbox" name="checkAll")
+              input(
+                type="checkbox"
+                name="checkAll"
+               )
             th STT
             th Hình ảnh
             th Tiêu đề
@@ -32,7 +45,7 @@ block main
           each item , index in products
             tr
               td
-                input(type="checkbox" name="checkItem") 
+                input(type="checkbox" name="checkItem"  value= item.id) 
               td #{index + 1}
               td
                 img(

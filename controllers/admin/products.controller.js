@@ -51,7 +51,7 @@ module.exports.index = async (req,res) => {
         pagination: pagination
     });
 }
-//[get] /admin/products/change-status/:id
+//[Patch] /admin/products/change-status/:id
 module.exports.changeStatus = async (req , res) => {
     // console.log(req.params) // tất cả các biến động thì sẽ được lưu vào thằng params
     const {id,statusChange} = req.params;
@@ -60,6 +60,13 @@ module.exports.changeStatus = async (req , res) => {
     },{
         status: statusChange
     }) // obj đầu tiên là thông tin bản ghi cần thay thế , obj2 là cái mà ta sẽ thay thế
+    res.json({ // thằng này là thằng mà ta muốn gửi khi mà ta fetch link
+        code : 200
+    });
+}
+//[Patch] /admin/products/change-multi
+module.exports.changeMulti = async (req , res) => {
+    
     res.json({ // thằng này là thằng mà ta muốn gửi khi mà ta fetch link
         code : 200
     });
