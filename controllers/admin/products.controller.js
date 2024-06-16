@@ -60,5 +60,7 @@ module.exports.changeStatus = async (req , res) => {
     },{
         status: statusChange
     }) // obj đầu tiên là thông tin bản ghi cần thay thế , obj2 là cái mà ta sẽ thay thế
-    res.redirect("back"); // chuyển hướng sang đường dẫn này - khác hẳn với render : trong trường hợp này ta chỉ thay đổi trạng thái nên ta sẽ ở nguyên trang đó => dùng back
+    res.json({ // thằng này là thằng mà ta muốn gửi khi mà ta fetch link
+        code : 200
+    });
 }

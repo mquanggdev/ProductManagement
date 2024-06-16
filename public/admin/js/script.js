@@ -54,3 +54,27 @@ if ( ArrayButtonPagination.length > 0 ){
     })
 }
 // End Phân Trang
+
+// Phần thay đổi trạng thái bằng phương thức patch
+// button change status
+const listButtonChangeStatus = document.querySelectorAll("[button-change-status]")
+if ( listButtonChangeStatus.length > 0) {
+    listButtonChangeStatus.forEach(button => {
+        button.addEventListener("click",() => {
+            const link = button.getAttribute("link");
+            fetch(link,{
+                method: "PATCH",
+                headers: {
+                    "Content-type":"application/json",
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code == 200){
+                        window.location.reload();
+                    }
+                })    
+        })
+    })
+}
+// end button change status
