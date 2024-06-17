@@ -149,14 +149,14 @@ if(boxActions){
 // end box action
 
 
-// xóa sản phẩm (mềm)
+// xóa sản phẩm (cứng)
 const listButtonDelete = document.querySelectorAll("[button-delete]");
 if(listButtonDelete.length > 0) {
     listButtonDelete.forEach(button => {
         button.addEventListener("click" , () => {
-            const id = button.getAttribute("button-delete");
-            fetch(`/admin/products/delete/${id}`,{
-                method : "DELETE",
+            const link = button.getAttribute("button-delete");
+            fetch(link,{
+                method : "PATCH",
             })
                 .then(res => res.json())
                 .then (data => {
