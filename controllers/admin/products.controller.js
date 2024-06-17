@@ -67,11 +67,26 @@ module.exports.changeStatus = async (req , res) => {
 //[Patch] /admin/products/change-multi
 module.exports.changeMulti = async (req , res) => {
     const {status,ids} = req.body; // thằng này lấy từ body về
-    await Product.updateMany({
-        _id : ids
-    },{
-        status: status
-    }) 
+    
+    switch (status) {
+        case "active":
+        case "inactive":
+            await Product.updateMany({
+                    _id : ids
+                },{
+                    status: status
+            })
+            break;
+        case "delete" :
+            await Product.updateMany({
+                    _id : ids
+                },{
+                    deleted: true
+            })
+            break;
+        default:
+            break;
+    }
     res.json({
         code : 200
     });
@@ -79,8 +94,10 @@ module.exports.changeMulti = async (req , res) => {
 //[Delete] /admin/products/delete:id
 module.exports.deleteItem = async (req , res) => {
     const id = req.params.id;
-    await Product.deleteOne({
+    await Product.updateOne({
         _id : id
+    } , {
+        deleted : true 
     }) 
     res.json({
         code : 200
