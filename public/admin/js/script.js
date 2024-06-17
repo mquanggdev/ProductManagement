@@ -168,3 +168,31 @@ if(listButtonDelete.length > 0) {
     })
 }
 // end xóa sản phẩm
+
+
+// Thay đổi vị trí
+const listInputPosition = document.querySelectorAll("input[name='position']");
+if(listInputPosition.length > 0) {
+    listInputPosition.forEach( element => {
+        element.addEventListener("change" , () => {
+            const position = parseInt(element.value);
+            const link = element.getAttribute("link");
+            const data = {
+                position : position
+            }
+            fetch(link , {
+                method:"PATCH" ,
+                headers:{
+                    "Content-type":"application/json"
+                },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                })
+        })
+    })
+    
+}
+// end thay đổi vị trí
