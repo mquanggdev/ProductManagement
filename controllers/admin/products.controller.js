@@ -63,6 +63,7 @@ module.exports.changeStatus = async (req , res) => {
     },{
         status: statusChange
     }) // obj đầu tiên là thông tin bản ghi cần thay thế , obj2 là cái mà ta sẽ thay thế
+    req.flash('success', 'Cập nhật trạng thái thành công');
     res.json({ // thằng này là thằng mà ta muốn gửi khi mà ta fetch link
         code : 200
     });

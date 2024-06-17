@@ -196,3 +196,14 @@ if(listInputPosition.length > 0) {
     
 }
 // end thay đổi vị trí
+
+
+// show popup
+const show_alert = document.querySelector("[show-alert]");
+if ( show_alert){
+    let time = parseInt(show_alert.getAttribute("show-alert")) || 3000;
+    setTimeout(() => {
+        show_alert.classList.add("hidden");
+    },time);
+}
+// end show popup
