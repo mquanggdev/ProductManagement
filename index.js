@@ -17,6 +17,8 @@ app.use(express.static("public"));
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 // parse application/json
 app.use(bodyParser.json())
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 //flash
 app.use(cookieParser('Yalidas'));
 app.use(session({ cookie: { maxAge: 60000 }}));
