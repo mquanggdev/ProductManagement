@@ -7,9 +7,11 @@ const routeAdmin = require("./routes/admin/index.route")
 const port = process.env.PORT;
 const database = require("./config/database");
 const systemConfig = require("./config/system");
+// phần hiển thị popup
 var flash = require('express-flash');
 var session = require('express-session')
 var cookieParser = require('cookie-parser')
+// end phần hiển thị popup
 
 app.set('views', './views');
 app.set('view engine', 'pug');
@@ -19,6 +21,7 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 app.use(bodyParser.json())
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
+
 //flash
 app.use(cookieParser('Yalidas'));
 app.use(session({ cookie: { maxAge: 60000 }}));
