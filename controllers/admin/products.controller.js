@@ -130,7 +130,11 @@ module.exports.create = async (req , res) => {
 }
 // [post]/admin/product/createPost
 module.exports.createPost = async (req , res) => {
-    console.log(req.file);
+    if(!req.body.title){
+        req.flash("error" , "Tiêu đề không được để trống!")
+        res.redirect("back");
+        return;
+    }
     if(req.file && req.file.filename){
         req.body.thumbnail = `/uploads/${req.file.filename}`
     }
