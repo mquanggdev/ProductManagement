@@ -12,6 +12,10 @@ var flash = require('express-flash');
 var session = require('express-session')
 var cookieParser = require('cookie-parser')
 // end phần hiển thị popup
+var methodOverride = require('method-override')
+
+
+
 
 app.set('views', './views');
 app.set('view engine', 'pug');
@@ -27,10 +31,16 @@ app.use(cookieParser('Yalidas'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 //end flash
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'))
 
 routeClient(app);
 routeAdmin(app);
 database.connect();
+
+
+
+
 
 app.listen(port , () => {
     console.log(`Đang chạy cổng 3000`);
