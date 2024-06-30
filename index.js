@@ -7,6 +7,7 @@ const routeAdmin = require("./routes/admin/index.route")
 const port = process.env.PORT;
 const database = require("./config/database");
 const systemConfig = require("./config/system");
+var path = require('path');
 // phần hiển thị popup
 var flash = require('express-flash');
 var session = require('express-session')
@@ -33,6 +34,10 @@ app.use(flash());
 //end flash
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))
+//tinyMCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
+
 
 routeClient(app);
 routeAdmin(app);
