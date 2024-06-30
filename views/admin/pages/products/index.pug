@@ -3,6 +3,7 @@ include ../../mixin/filter-status.pug
 include ../../mixin/form-search.pug
 include ../../mixin/pagination.pug
 include ../../mixin/box-actions.pug
+include ../../mixin/sort.pug
 block main
   h1(class="mb-4") Quản lý sản phẩm
   .card.mb-3
@@ -13,6 +14,12 @@ block main
           +filter-status(filterStatus)
         .col-6
           +form-search(keyword)
+  .card.mb-3
+    .card-header Sắp xếp
+    .card-body
+      .row
+        .col-4
+          +sort()
   .card.mb-3
     .card-header Chuyển Trạng Thái
     .card-body 
