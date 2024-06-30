@@ -17,10 +17,20 @@ module.exports.index = async (req, res) => {
         products : products
     });
 }
-// [POST]/products/add
-module.exports.add = (req, res) => {
-    res.send("Trang thêm sản phẩm");
-}
-module.exports.edit = (req, res) => {
-    res.send("Trang sửa sản phẩm");
+module.exports.detail = async (req, res) => {
+    try {
+        const slug = req.params.slug;
+        const product = await Product.findOne({
+            slug:slug,
+            deleted:false,
+            status:"active"
+        })
+        res.render("client/pages/products/detail.pug" , {
+            pageTitle :"Trang Sản Phẩm",
+            product : product
+        });
+    } catch (error) {
+        res.redirect("/")
+    }
+   
 }
