@@ -9,10 +9,11 @@ module.exports.index = async (req,res) => {
         deleted: false
     }
     const records = await ProductCategory.find(find);
+    const newRecords = createTreeHelper(records);
     if(records){
             res.render("admin/pages/products-category/index.pug" , {
             pageTitle : "Trang danh mục sản phẩm " , 
-            records:records
+            records:newRecords
         });
     }else{
         res.redirect("back");
