@@ -15,5 +15,5 @@ const rolesModelSchema = new mongoose.Schema({
     timestamps: true // tự động thêm trường createAt và updateAt
 })
 
-const Role = mongoose.model("Role" , productModelSchema , "Roles");
-module.exports = Product;
+const Role = mongoose.model("Role" , rolesModelSchema , "Roles");
+module.exports = Role;
