@@ -169,11 +169,16 @@ module.exports.edit = async (req , res) => {
         _id:id,
         deleted:false 
         })
+        const category = await ProductCategory.find({
+            deleted:false
+        })
+        const newCategory = createTreeHelper(category);
 
         if(product){
             res.render("admin/pages/products/edit.pug" , {
                 pageTitle: "Sửa sản phẩm",
-                product:product
+                product:product,
+                category:newCategory
             })
         }
         else{
