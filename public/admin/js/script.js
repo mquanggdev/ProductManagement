@@ -256,3 +256,58 @@ if(sort){
 }
 
 // end sort
+
+
+// Phân quyền - permission 
+const tablePermission = document.querySelector("[table-permissions]")
+if(tablePermission){
+    const buttonSubmitPermission = document.querySelector("[button-submit-permissions]")
+    buttonSubmitPermission.addEventListener("click",() => {
+        let result = [] ;
+        const rows = tablePermission.querySelectorAll("[data-name]");
+        if(rows){
+            rows.forEach(row => {
+                const nameRow = row.getAttribute("data-name");
+                const inputs = row.querySelectorAll("input");
+                if(nameRow == "id"){
+                    inputs.forEach(input => {
+                        result.push({
+                            id: input.value,
+                            permissions:[]
+                        })
+                    })
+                }
+                else{
+                    inputs.forEach((input,index) => {
+                        const checked = input.checked;
+                        if(checked){
+                            result[index].permissions.push(nameRow);
+                        }
+                    })
+                }
+            })
+        }
+
+        console.log(result);
+        if(result.length > 0){
+            const formChangePermissions = document.querySelector("[form-change-permissions]");
+            const inputRoles  = formChangePermissions.querySelector("input[name='roles']");
+            inputRoles.value = JSON.stringify(result);
+            formChangePermissions.submit();
+        }
+    })
+    // hiển thị lên giao diện những ô được tích
+    const dataRecords = document.querySelector("[data-records]")
+    if(dataRecords){
+        const records = JSON.parse(dataRecords.getAttribute("data-records"));
+        records.forEach((record,index) => {
+            const permissions = record.permissions;
+            permissions.forEach(permission => {
+                const row = tablePermission.querySelector(`tr[data-name='${permission}']`)
+                const input = row.querySelectorAll("input")[index];
+                input.checked = true
+            })
+        })
+    }
+}
+// end phân quyền permission

@@ -12,6 +12,36 @@ module.exports.index = async (req,res) => {
     });
 }
 
+//GET /admin/roles/permissions
+module.exports.indexPermissions = async (req,res) => {
+    const records = await Role.find({
+        deleted:false
+    })
+    res.render("admin/pages/roles/permissions.pug" , {
+        pageTitle : "Trang Phân Quyền " , 
+        records:records,
+    });
+}
+
+//Patch /admin/roles/permission
+module.exports.indexPermissionsPatch = async (req,res) => {
+    try {
+        const roles = JSON.parse(req.body.roles);
+        for(var role of roles){
+            await Role.updateOne({
+                _id: role.id,
+                deleted:false
+            },{
+                permissions : role.permissions
+            })
+        }
+        req.flash("success", "Cập nhật phân quyền thành công!");
+        res.redirect("back")
+    } catch (error) {
+        res.redirect(`/${systemConfig.prefixAdmin}/roles/permissions`);
+    }
+}
+
 //GET /admin/roles/create
 module.exports.create = async (req,res) => {
     res.render("admin/pages/roles/create.pug" , {
@@ -56,3 +86,5 @@ module.exports.editPatch = async (req,res) => {
         res.redirect(`/${systemConfig.prefixAdmin}/roles`);
     }
 }
+
+
