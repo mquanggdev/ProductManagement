@@ -101,3 +101,28 @@ module.exports.editPatch = async (req , res) => {
     }
     
 }
+
+//[get]/admin/products-category/detail/:id
+module.exports.detail = async (req,res) => {
+    const id = req.params.id;
+    let find = {
+        _id : id,
+        deleted: false
+    }
+    const records = await ProductCategory.findOne(find);
+    console.log(records);
+    let titleParent = "";
+    const parent_id = records.parent_id ;
+    if(parent_id){
+        const categoryParent = await ProductCategory.findOne({
+            _id : parent_id
+        });
+        titleParent = categoryParent.title
+    }
+    res.render("admin/pages/products-category/detail.pug" , {
+        pageTitle : "Thêm danh mục sản phẩm " ,
+        records : records,
+        titleParent:titleParent
+    });
+    
+}

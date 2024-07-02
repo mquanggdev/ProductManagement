@@ -1,0 +1,35 @@
+extends ../../layout/default.pug
+
+block main
+  if (records.title)
+    h1(class="mb-4") #{records.title}
+
+  if (records.parent_id)
+    div(class="mb-4") Thuộc danh mục lớn  <b>#{titleParent}</b>
+
+  if (records.discountPercentage)
+    div(class="mb-4") Giảm giá: <b>#{records.discountPercentage}%</b>
+
+  if (records.stock)
+    div(class="mb-4") Còn lại: <b>#{records.stock}</b>
+
+  if (records.thumbnail)
+    div(class="mb-4")
+      img(
+        src=records.thumbnail
+        style="width: 100px"
+      )
+
+  if (records.status)
+    div(class="mb-4")
+      span Trạng thái:
+      if (records.status === "active")
+        span(class="badge badge-success") Hoạt động
+      else
+        span(class="badge badge-danger") Dừng hoạt động
+
+  if (records.position)
+    div(class="mb-4") Vị trí: <b>#{records.position}</b>
+
+  if (records.description)
+    div(class="mb-4") !{records.description}
