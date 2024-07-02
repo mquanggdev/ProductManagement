@@ -23,5 +23,5 @@ router.patch(
      validate.createPost,
      controller.editPatch);
 router.get("/detail/:id" , controller.detail);
-
+router.get("/delete/:id",controller.delete)
 module.exports = router

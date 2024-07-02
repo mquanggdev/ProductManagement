@@ -126,3 +126,22 @@ module.exports.detail = async (req,res) => {
     });
     
 }
+
+// [patch]/admin/products-category/delete/:id
+module.exports.delete = async (req , res) => {
+    try{
+        const id = req.params.id;
+        await ProductCategory.updateOne({
+            _id:id
+        },{
+            deleted:true
+        });
+        req.flash("success","Xóa thành công")
+        res.redirect(`/${systemConfig.prefixAdmin}/products-category`);
+    }
+    catch(e){
+        req.flash("error ", "Sửa thất bại")
+        console.log(e);
+    }
+    
+}
