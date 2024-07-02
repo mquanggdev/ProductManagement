@@ -127,7 +127,7 @@ module.exports.detail = async (req,res) => {
     
 }
 
-// [patch]/admin/products-category/delete/:id
+// [get]/admin/products-category/delete/:id
 module.exports.delete = async (req , res) => {
     try{
         const id = req.params.id;

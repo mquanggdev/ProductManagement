@@ -10,6 +10,8 @@ router.get("/create" , controller.create);
 router.post("/create" ,validate.createPost,controller.createPost);
 router.get("/edit/:id" ,controller.edit);
 router.patch("/edit/:id" ,validate.createPost,controller.editPatch);
+router.get("/detail/:id",controller.detail);
+router.get("/delete/:id",controller.delete)
 module.exports = router
 
 

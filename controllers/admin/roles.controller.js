@@ -88,4 +88,45 @@ module.exports.editPatch = async (req,res) => {
     }
 }
 
+//[get]/admin/detail/:id
+module.exports.detail = async (req , res) => {
+    try{
+        const id = req.params.id ;
+
+        const role = await Role.findOne({
+            _id:id,
+            deleted:false 
+        })
+
+        if(role){
+            res.render("admin/pages/roles/detail.pug" , {
+                pageTitle: "Chi tiết nhóm",
+                role:role
+            })
+        }
+        else{
+            res.redirect(`${systemConfig.prefixAdmin}/roles`)
+        }
+    }catch(e){
+        res.redirect(`/${systemConfig.prefixAdmin}/roles`);
+    }
+}
+// [get]/admin/products-category/delete/:id
+module.exports.delete = async (req , res) => {
+    try{
+        const id = req.params.id;
+        await Role.updateOne({
+            _id:id
+        },{
+            deleted:true
+        });
+        req.flash("success","Xóa thành công")
+        res.redirect(`/${systemConfig.prefixAdmin}/roles`);
+    }
+    catch(e){
+        req.flash("error ", "Sửa thất bại")
+        console.log(e);
+    }
+    
+}
 
