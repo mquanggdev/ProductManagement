@@ -82,6 +82,7 @@ module.exports.editPatch = async (req,res) => {
             _id:id
         },req.body)
         req.flash("success","Thêm quyền thành công")
+        res.redirect(`/${systemConfig.prefixAdmin}/roles`);
     } catch (error) {
         res.redirect(`/${systemConfig.prefixAdmin}/roles`);
     }
