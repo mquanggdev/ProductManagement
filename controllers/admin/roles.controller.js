@@ -101,7 +101,7 @@ module.exports.detail = async (req , res) => {
         if(role){
             res.render("admin/pages/roles/detail.pug" , {
                 pageTitle: "Chi tiết nhóm",
-                role:role
+                records:role
             })
         }
         else{
@@ -111,7 +111,7 @@ module.exports.detail = async (req , res) => {
         res.redirect(`/${systemConfig.prefixAdmin}/roles`);
     }
 }
-// [get]/admin/products-category/delete/:id
+// [get]/admin/roles/delete/:id
 module.exports.delete = async (req , res) => {
     try{
         const id = req.params.id;

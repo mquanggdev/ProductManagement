@@ -10,18 +10,18 @@ html
   body
     +alert-error(5000)
     +alert-success(3000)
+    if(role.permissions.length > 0)
+      include ../partial/header.pug
 
-    include ../partial/header.pug
+      .body
+        
+        include ../partial/sider.pug
 
-    .body
+        .main
+          block main
 
-      include ../partial/sider.pug
-
-      .main
-        block main
-
-    script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js") 
-    script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js")
-    script(src="/tinymce/tinymce.min.js") ;
-    script(src="/admin/js/tinymce-config.js") 
-    script(src="/admin/js/script.js")
+      script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js") 
+      script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js")
+      script(src="/tinymce/tinymce.min.js") ;
+      script(src="/admin/js/tinymce-config.js") 
+      script(src="/admin/js/script.js")

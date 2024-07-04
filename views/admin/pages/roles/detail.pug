@@ -1,11 +1,13 @@
 extends ../../layout/default.pug
 
 block main
-    if (role.title)
-        h1(class="mb-4") #{role.title}
-    if (role.description)
-        div(class="mb-4") !{role.description}
-    if (role.permissions)
-        h2(class="mb-4") Các quyền sở hữu
-        each permission in role.permissions
-            div(class="mb-4") !{permission}
+    if(role.permissions.includes("roles_permissions"))
+        if (records.title)
+            h1(class="mb-4") #{records.title}
+        if (records.description)
+            div(class="mb-4") !{records.description}
+        if(role.permissions.includes("roles_permissions"))
+            if (records.permissions)
+                h2(class="mb-4") Các quyền sở hữu
+                each permission in records.permissions
+                    div(class="mb-4") !{permission}
