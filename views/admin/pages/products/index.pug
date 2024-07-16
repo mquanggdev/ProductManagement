@@ -4,6 +4,7 @@ include ../../mixin/form-search.pug
 include ../../mixin/pagination.pug
 include ../../mixin/box-actions.pug
 include ../../mixin/sort.pug
+include ../../mixin/moment.pug
 block main
   if(role.permissions.includes("products_view"))
     h1(class="mb-4") Quản lý sản phẩm
@@ -52,6 +53,7 @@ block main
               th Vị trí
               if(role.permissions.includes("products_edit"))
                 th Trạng thái
+              td Người tạo
               th Hành động
 
           tbody
@@ -91,7 +93,11 @@ block main
                       button(
                         link =`/${prefixAdmin}/products/change-status/active/${item.id}` 
                         class="badge badge-danger"
-                        button-change-status) Dừng hoạt động 
+                        button-change-status) Dừng hoạt động
+                td
+                  if(item.createBy.accountFullName)
+                    div #{item.createBy.accountFullName}
+                    +formatDate(item.createBy.createAt)
                 td
                   a(
                       class="btn btn-info btn-sm mr-1"

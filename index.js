@@ -14,6 +14,7 @@ var session = require('express-session')
 var cookieParser = require('cookie-parser')
 // end phần hiển thị popup
 var methodOverride = require('method-override')
+const moment = require("moment")
 
 
 
@@ -36,6 +37,8 @@ app.use(flash());
 app.use(methodOverride('_method'))
 //tinyMCE
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
+app.locals.moment = moment;
 
 
 

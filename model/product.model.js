@@ -19,7 +19,15 @@ const productModelSchema = new mongoose.Schema({
          type: String,
          slug: "title",
          unique : true 
+        },
+    deletedAt:Date,
+    createBy:{
+        account_id: String,
+        createAt: {
+            type:Date ,
+            default:Date.now
         }
+    }
 }, {
     timestamps: true // tự động thêm trường createAt và updateAt
 })
