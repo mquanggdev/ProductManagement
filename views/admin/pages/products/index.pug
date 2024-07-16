@@ -54,6 +54,7 @@ block main
               if(role.permissions.includes("products_edit"))
                 th Trạng thái
               td Người tạo
+              td Nguời đã cập nhật
               th Hành động
 
           tbody
@@ -95,9 +96,13 @@ block main
                         class="badge badge-danger"
                         button-change-status) Dừng hoạt động
                 td
-                  if(item.createBy.accountFullName)
+                  if(item.createBy.accountFullName )
                     div #{item.createBy.accountFullName}
                     +formatDate(item.createBy.createAt)
+                td
+                  if(item.updateBy.length > 0 )
+                    div #{item.updateBy.slice(-1)[0].accountFullName}
+                    +formatDate(item.updateBy.slice(-1)[0].createAt)
                 td
                   a(
                       class="btn btn-info btn-sm mr-1"

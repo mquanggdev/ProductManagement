@@ -30,7 +30,13 @@ const productModelSchema = new mongoose.Schema({
     deleteBy:{
         account_id: String,
         deletedAt:Date
-    }
+    },
+    updateBy:[
+        {
+            account_id: String,
+            updateAt:Date
+        }
+    ]
 }, {
     timestamps: true // tự động thêm trường createAt và updateAt
 })

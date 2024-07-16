@@ -65,6 +65,18 @@ module.exports.index = async (req,res) => {
             if(user){
                 product.createBy.accountFullName = user.fullname;
             }
+
+            const userUpdatedId = product.updateBy.slice(-1)[0];
+            if(userUpdatedId){
+                const userUpdated = await Account.findOne({
+                    _id :userUpdatedId.account_id 
+                })
+                console.log(userUpdated); 
+                if(userUpdated){
+                    userUpdatedId.accountFullName = userUpdated.fullname;
+                }
+            }
+            
         }
 
     res.render("admin/pages/products/index.pug" , {
@@ -92,14 +104,18 @@ module.exports.changeStatus = async (req , res) => {
 //[Patch] /admin/products/change-multi
 module.exports.changeMulti = async (req , res) => {
     const {status,ids} = req.body; // thằng này lấy từ body về
-    
+    const personUpdate = {
+        account_id: res.locals.user.id,
+        updateAt: new Date()
+    }
     switch (status) {
         case "active":
         case "inactive":
             await Product.updateMany({
                     _id : ids
                 },{
-                    status: status
+                    status: status,
+                    $push : {updateBy:personUpdate}
             })
             break;
         case "delete" :
@@ -141,10 +157,15 @@ module.exports.deleteItem = async (req , res) => {
 module.exports.changePosition = async (req , res) => {
     const id = req.params.id;
     const position = req.body.position;
+    const personUpdate = {
+        account_id: res.locals.user.id,
+        updateAt: new Date()
+    }
     await Product.updateOne({
         _id : id
     } , {
-        position : position 
+        position : position,
+        $push : {updateBy:personUpdate} 
     }) 
     res.json({
         code : 200
@@ -230,10 +251,19 @@ module.exports.editPatch = async (req , res) => {
             const coutProducts = await Product.countDocuments({});
             req.body.position = coutProducts + 1;
         }
+
+        const personUpdate = {
+            account_id: res.locals.user.id,
+            updateAt: new Date()
+        }
+        
         await Product.updateOne({
             _id: id,
             deleted: false
-        }, req.body);
+        }, {
+            ...req.body,
+            $push:{updateBy:personUpdate}
+        });
         req.flash("success", "Cập nhật sản phẩm thành công!");
     }catch(err){
         req.flash("error","Id sản phẩm không hợp lệ")
