@@ -144,7 +144,8 @@ module.exports.create = async (req , res) => {
 }
 // [post]/admin/product/createPost
 module.exports.createPost = async (req , res) => {
-    req.body.price = parseInt(req.body.price);
+    if(res.locals.role.permissions.includes("products_create")){
+        req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
     if (req.body.position){
@@ -158,6 +159,10 @@ module.exports.createPost = async (req , res) => {
     const newProduct = new Product(req.body);
     await newProduct.save();
     res.redirect(`/${systemConfig.prefixAdmin}/products`);
+    }else{
+        return;
+    }
+    
 }
 
 // [get]/admin/product/edit/:id
