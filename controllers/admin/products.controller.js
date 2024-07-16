@@ -106,7 +106,11 @@ module.exports.changeMulti = async (req , res) => {
             await Product.updateMany({
                     _id : ids
                 },{
-                    deleted: true
+                    deleted: true,
+                    deleteBy:{
+                        account_id : res.locals.user.id,
+                        deletedAt : new Date()
+                    }
             })
             break;
         default:
@@ -122,7 +126,11 @@ module.exports.deleteItem = async (req , res) => {
     await Product.updateOne({
         _id : id
     } , {
-        deleted : true 
+        deleted : true, 
+        deleteBy:{
+            account_id : res.locals.user.id,
+            deletedAt : new Date()
+        }
     })
     req.flash("success" , "Xóa sản phẩm thành công")
     res.json({

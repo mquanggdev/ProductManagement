@@ -20,13 +20,16 @@ const productModelSchema = new mongoose.Schema({
          slug: "title",
          unique : true 
         },
-    deletedAt:Date,
     createBy:{
         account_id: String,
         createAt: {
             type:Date ,
             default:Date.now
         }
+    },
+    deleteBy:{
+        account_id: String,
+        deletedAt:Date
     }
 }, {
     timestamps: true // tự động thêm trường createAt và updateAt
