@@ -4,6 +4,7 @@ const productsCategoryRouter = require("./products-category.route");
 const rolesRouter = require("./roles.route");
 const accountsRouter = require("./accounts.route");
 const authensRouter = require("./authens.route");
+const profileRouter = require("./profiles.route");
 const systemConfig = require("../../config/system");
 const authMiddleware = require("../../middleware/admin/authens.middleware");
 
@@ -15,4 +16,5 @@ module.exports = (app) =>{
     app.use(`/${PORT}` + "/roles" ,authMiddleware.requireAuth, rolesRouter)
     app.use(`/${PORT}` + "/accounts" ,authMiddleware.requireAuth,accountsRouter)
     app.use(`/${PORT}` + "/authens" , authensRouter)
+    app.use(`/${PORT}` + "/profiles" ,authMiddleware.requireAuth, profileRouter)
 } 
