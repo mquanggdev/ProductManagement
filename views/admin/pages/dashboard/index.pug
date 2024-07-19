@@ -1,6 +1,15 @@
 extends ../../layout/default.pug
 block main
     h1 Trang Tổng Quan
-    div #{user}
-    div -----------------------
-    div #{role}
+
+    h2 #{user.fullName}
+    div #{user.phone}
+    div #{user.email}
+    img(
+        src=user.avatar
+        width="150px"
+    )
+
+    h2 #{role.title}
+    each item in role.permissions
+        div #{item} 

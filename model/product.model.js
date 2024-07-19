@@ -36,7 +36,11 @@ const productModelSchema = new mongoose.Schema({
             account_id: String,
             updateAt:Date
         }
-    ]
+    ],
+    featured:{
+        type:String,
+        default:"0"
+    }
 }, {
     timestamps: true // tự động thêm trường createAt và updateAt
 })
