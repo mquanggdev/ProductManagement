@@ -176,10 +176,14 @@ module.exports.create = async (req , res) => {
     const category = await ProductCategory.find({
         deleted:false
     })
+    const product = await Product.find({
+        deleted:false
+    })
     const newCategory = createTreeHelper(category);
     res.render("admin/pages/products/create.pug" , {
         pageTitle: "Thêm mới sản phẩm",
-        category: newCategory
+        category: newCategory,
+        product:product
     })
 }
 // [post]/admin/product/createPost
