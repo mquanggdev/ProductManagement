@@ -1,3 +1,5 @@
+include ../../admin/mixin/alert.pug
+
 doctype html
 html(lang="en")
     head
@@ -7,6 +9,8 @@ html(lang="en")
         link(rel="stylesheet", href="/css/style.css")
         title #{pageTitle}
     body
+        +alert-error(5000)
+        +alert-success(3000)
         include ../partials/header.pug
         block main
         include ../partials/footer.pug
