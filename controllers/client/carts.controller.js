@@ -72,7 +72,6 @@ module.exports.addPost = async (req,res) => {
 }
 
 // GET /cart/delete/:productId 
-
 module.exports.delete = async (req , res) => {
     const cartId = req.cookies.cartId ;
     const productId = req.params.productId;
@@ -83,6 +82,22 @@ module.exports.delete = async (req , res) => {
             products : {
                 productId : productId
             }
+        }
+    });
+    res.redirect("back") ;
+}
+
+// Get /cart/update/:productId/:quantity 
+module.exports.update = async (req , res) => {
+    const cartId = req.cookies.cartId ;
+    const productId = req.params.productId;
+    const quantity = req.params.quantity
+    await Cart.updateOne({
+        _id : cartId,
+        'products.productId' : productId
+    },{
+        $set: {
+            'products.$.quantity' : quantity
         }
     });
     res.redirect("back") ;
