@@ -36,7 +36,11 @@ header.header
                 +sub-menu(layoutCategoryProducts)
             li
               a(href="/carts") Giỏ Hàng (#{cartTotal})
-            li
-              a(href="/users/login") Đăng nhập
-            li
-              a(href="/users/register") Đăng ký
+            if(user)
+              li
+                a(href="/users/logout") Đăng xuất
+            else
+              li
+                a(href="/users/login") Đăng nhập
+              li
+                a(href="/users/register") Đăng ký
