@@ -1,0 +1,45 @@
+extends ../../layout/default.pug
+include ../../mixin/box-head.pug
+
+block main
+  .container.my-3
+    .row
+      .col-8.mx-auto
+        +box-head(pageTitle)
+
+        form(
+          action="/users/register"
+          method="POST"
+        )
+          div(class="form-group")
+            label(for="fullname") Họ và tên
+            input(
+              type="text"
+              class="form-control"
+              id="fullname"
+              name="fullname"
+              required
+            )
+          div(class="form-group")
+            label(for="email") Email
+            input(
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              required
+            )
+          div(class="form-group")
+            label(for="password") Mật khẩu
+            input(
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              required
+            )
+          div(class="form-group")
+            button(
+              type="submit"
+              class="btn btn-primary btn-block"
+            ) Đăng ký
