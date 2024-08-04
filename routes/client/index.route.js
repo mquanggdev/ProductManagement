@@ -7,11 +7,14 @@ const cartMiddleware = require("../../middleware/client/carts.middleware");
 const checkoutRouter = require("./checkout..route");
 const userRouter = require("./users.route");
 const userMiddleware = require("../../middleware/client/users.middleware");
+const settingMiddleware = require("../../middleware/client/setting.middleware");
+
 
 module.exports = (app) => {
     app.use(categoryProductMiddelware.category);
     app.use(cartMiddleware.cartId);
     app.use(userMiddleware.infoUser);
+    app.use(settingMiddleware.setting);
     
     app.use("/" , homeRouter);
     app.use("/products" , productsRouter);
