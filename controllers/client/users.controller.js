@@ -108,3 +108,55 @@ module.exports.forgotPasswordPost = async (req, res) => {
 
   res.redirect(`/users/password/otp?email=${email}`) ;
 };
+// [GET] /users/password/otp
+module.exports.otpPassword = async (req, res) => {
+  const email = req.query.email;
+  res.render("client/pages/users/otp-password.pug", {
+    pageTitle : "Nhập OTP",
+    email:email
+  })
+};
+// [post] /users/password/otp
+module.exports.otpPasswordPost = async (req, res) => {
+  const email = req.body.email ;
+  const otp = req.body.otp ;
+
+  const result = await ForgotPassword.findOne({
+      email:email,
+      otp:otp
+  });
+  
+
+  if(!result){
+    req.flash("error", "OTP không hợp lệ!");
+    res.redirect("back");
+    return;
+  }
+
+  const user = await User.findOne({
+    email: email
+  });
+
+  res.cookie("tokenUser", user.tokenUser);
+
+  res.redirect("/users/password/reset")
+};
+// [GET] /users/password/reset
+module.exports.resetPassword = async (req, res) => {
+  res.render("client/pages/users/reset.pug", {
+    pageTitle : "Đổi Mật Khẩu"
+  })
+};
+// [patch] /users/password/reset
+module.exports.resetPasswordPatch = async (req, res) => {
+  const newPassword = req.body.password ;
+  await User.updateOne(
+    {
+      tokenUser: req.cookies.tokenUser
+    } , {
+      password : md5(newPassword)
+    }
+  )
+  res.redirect("/")
+};
+
