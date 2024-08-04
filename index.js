@@ -39,6 +39,11 @@ app.use(methodOverride('_method'))
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 app.locals.moment = moment;
+app.get("*", (req, res) => {
+    res.render("client/pages/errors/404", {
+      pageTitle: "404 Not Found"
+    });
+  });
 
 
 
