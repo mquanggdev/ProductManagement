@@ -38,6 +38,8 @@ header.header
               a(href="/carts") Giỏ Hàng (#{cartTotal})
             if(user)
               li
+                a(href="/users/profile") #{user.fullname}
+              li
                 a(href="/users/logout") Đăng xuất
             else
               li

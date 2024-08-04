@@ -23,7 +23,7 @@ module.exports.registerPost = async (req, res) => {
     return;
   }
   const userData = {
-    fullname: req.body.fullName,
+    fullname: req.body.fullname,
     email: req.body.email,
     password: md5(req.body.password),
     tokenUser: generateHelper.generateRandomString(30)
@@ -164,3 +164,9 @@ module.exports.resetPasswordPatch = async (req, res) => {
   res.redirect("/")
 };
 
+// [GET] /user/profile
+module.exports.profile = async (req, res) => {
+  res.render("client/pages/users/profile", {
+    pageTitle: "Thông tin cá nhân"
+  });
+}
