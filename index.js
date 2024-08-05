@@ -15,9 +15,18 @@ var cookieParser = require('cookie-parser')
 // end phần hiển thị popup
 var methodOverride = require('method-override')
 const moment = require("moment")
+//socket declare
+const http = require('http');
+const { Server } = require("socket.io");
 
 
-
+//socket io
+const server = http.createServer(app);
+const io = new Server(server);
+io.on("connection", (socket) => {
+  console.log("Có 1 người dùng kết nối", socket.id);
+});
+// end socket io
 
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'pug');
@@ -52,6 +61,6 @@ database.connect();
 
 
 
-app.listen(port , () => {
+server.listen(port , () => {
     console.log(`Đang chạy cổng 3000`);
 })
