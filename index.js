@@ -23,9 +23,7 @@ const { Server } = require("socket.io");
 //socket io
 const server = http.createServer(app);
 const io = new Server(server);
-io.on("connection", (socket) => {
-  console.log("Có 1 người dùng kết nối", socket.id);
-});
+global._io = io;
 // end socket io
 
 app.set('views', `${__dirname}/views`);

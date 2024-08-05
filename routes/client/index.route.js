@@ -23,6 +23,6 @@ module.exports = (app) => {
     app.use("/carts" , cartsRouter);
     app.use("/checkout" , checkoutRouter);
     app.use("/users", userRouter)
-    app.use("/chat", chatRouter)
+    app.use("/chat",userMiddleware.requireAuth, chatRouter)
 
 } 
