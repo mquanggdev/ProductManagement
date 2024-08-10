@@ -9,7 +9,7 @@ module.exports = async (req , find) => {
     }
     pagination.skip = (pagination.currentPage - 1) * (pagination.limitItems); // bỏ qua bao nhiêu trang
     const allProductFind = await Product.countDocuments(find);
-    pagination.totalPage = Math.ceil(allProductFind / pagination.limitItems);
+    pagination.total = Math.ceil(allProductFind / pagination.limitItems);
 
     return pagination;
 }

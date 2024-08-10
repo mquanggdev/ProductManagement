@@ -31,12 +31,11 @@ const productModelSchema = new mongoose.Schema({
         account_id: String,
         deletedAt:Date
     },
-    updateBy:[
+    updateBy:
         {
             account_id: String,
             updateAt:Date
-        }
-    ],
+        },
     featured:{
         type:String,
         default:"0"

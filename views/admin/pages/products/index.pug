@@ -32,11 +32,11 @@ block main
       .card-header Danh sách
       .card-body
         div(class="text-right mb-3")
-        if(role.permissions.includes("products_create"))
-          a(
-            href=`/${prefixAdmin}/products/create`
-            class="btn btn-outline-success"
-          ) + Thêm mới
+          if(role.permissions.includes("products_create"))
+            a(
+              href=`/${prefixAdmin}/products/create`
+              class="btn btn-outline-success"
+            ) + Thêm mới
 
         table.table.table-hover.table-sm
           thead
@@ -81,7 +81,7 @@ block main
                   style="width:60px"
                   min="1"
                   link =`/${prefixAdmin}/products/change-position/${item.id}`
-                  disabled = `${role.permissions.includes("products_edit")}` 
+                  disabled =!role.permissions.includes("products_edit") 
                   )
                 if(role.permissions.includes("products_edit"))
                   td
@@ -100,9 +100,9 @@ block main
                     div #{item.createBy.accountFullName}
                     +formatDate(item.createBy.createAt)
                 td
-                  if(item.updateBy.length > 0 )
-                    div #{item.updateBy.slice(-1)[0].accountFullName}
-                    +formatDate(item.updateBy.slice(-1)[0].createAt)
+                  if(item.updateBy.userEditFullName )
+                    div #{item.updateBy.userEditFullName}
+                    +formatDate(item.updateBy.updateAt)
                 td
                   a(
                       class="btn btn-info btn-sm mr-1"

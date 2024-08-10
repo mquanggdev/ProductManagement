@@ -40,7 +40,7 @@ module.exports.index = async (req,res) => {
 
 
     // Phân trang
-    const pagination = await paginationHelper(req , find);
+    const pagination = await paginationHelper(req ,find);
      // end Phân trang
 
      // sort
@@ -59,25 +59,25 @@ module.exports.index = async (req,res) => {
 
 
         for (const product of products) {
-            const user = await Account.findOne({
+            const userCreate = await Account.findOne({
                 _id : product.createBy.account_id
             });
-            if(user){
-                product.createBy.accountFullName = user.fullname;
+            if(userCreate){
+                product.createBy.accountFullName = userCreate.fullname;
             }
 
-            const userUpdatedId = product.updateBy.slice(-1)[0];
-            if(userUpdatedId){
-                const userUpdated = await Account.findOne({
-                    _id :userUpdatedId.account_id 
-                })
-                console.log(userUpdated); 
-                if(userUpdated){
-                    userUpdatedId.accountFullName = userUpdated.fullname;
-                }
-            }
-            
+
+            const userEdit = await Account.findOne({
+                _id : product.updateBy.account_id
+            })
+            if(userEdit){
+                product.updateBy.userEditFullName = userEdit.fullname;
+            }            
         }
+
+        
+        
+        
 
     res.render("admin/pages/products/index.pug" , {
         pageTitle : "Trang Admin Sản Phẩm " , 
@@ -91,11 +91,17 @@ module.exports.index = async (req,res) => {
 module.exports.changeStatus = async (req , res) => {
     // console.log(req.params) // tất cả các biến động thì sẽ được lưu vào thằng params
     const {id,statusChange} = req.params; // thằng này thì lấy thẳng từ link
+    const updateBy = {
+        account_id : res.locals.user.id,
+        updateAt : new Date()
+    }
     await Product.updateOne({
         _id : id
     },{
-        status: statusChange
+        status: statusChange,
+        updateBy:updateBy
     }) // obj đầu tiên là thông tin bản ghi cần thay thế , obj2 là cái mà ta sẽ thay thế
+    
     req.flash('success', 'Cập nhật trạng thái thành công');
     res.json({ // thằng này là thằng mà ta muốn gửi khi mà ta fetch link
         code : 200
@@ -115,7 +121,7 @@ module.exports.changeMulti = async (req , res) => {
                     _id : ids
                 },{
                     status: status,
-                    $push : {updateBy:personUpdate}
+                    updateBy:personUpdate
             })
             break;
         case "delete" :
@@ -165,7 +171,7 @@ module.exports.changePosition = async (req , res) => {
         _id : id
     } , {
         position : position,
-        $push : {updateBy:personUpdate} 
+        updateBy:personUpdate
     }) 
     res.json({
         code : 200
@@ -266,7 +272,7 @@ module.exports.editPatch = async (req , res) => {
             deleted: false
         }, {
             ...req.body,
-            $push:{updateBy:personUpdate}
+            updateBy:personUpdate
         });
         req.flash("success", "Cập nhật sản phẩm thành công!");
     }catch(err){

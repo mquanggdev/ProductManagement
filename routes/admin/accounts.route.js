@@ -11,8 +11,10 @@ router.get("/create" , controller.create);
 router.post("/create" ,upload.single("avatar"),uploadCloud.uploadSingle,accountsValidate.createPost,controller.createPost);
 router.get("/edit/:id" ,controller.edit);
 router.patch("/edit/:id" ,upload.single("avatar"),uploadCloud.uploadSingle,accountsValidate.createPost,controller.editPatch);
-// router.get("/detail/:id",controller.detail);
-// router.get("/delete/:id",controller.delete)
+router.get("/detail/:id",controller.detail);
+router.get("/delete/:id",controller.delete);
+router.get("/changeStatus/:status/:id",controller.changeStatus);
+router.patch("/change-multi" , controller.changeMulti)
 module.exports = router
 
 

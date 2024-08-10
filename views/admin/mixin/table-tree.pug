@@ -1,7 +1,10 @@
+include ./moment.pug
 mixin table-tree(records, level = 1)
     each item, index in records
         - const prefix = Array(level + 1).join("-- ")
         tr
+            td
+                input(type="checkbox" name="checkItem"  value= item.id)
             td #{item.index}
             td
                 img(
@@ -18,12 +21,21 @@ mixin table-tree(records, level = 1)
                 style="width: 60px"
                 min="1"
                 name="position"
+                link=`/${prefixAdmin}/products-category/changePosition/${item.id}`
                 )
+            td
+                if(item.createBy.accountFullName)
+                    div #{item.createBy.accountFullName}
+                    +formatDate(item.createBy.createAt)
+            td
+                if(item.updateBy.userEditFullName)
+                    div #{item.updateBy.userEditFullName}
+                    +formatDate(item.createBy.createAt)
             if(role.permissions.includes("products-category_edit"))
                 td
                     if (item.status === "active")
                         a(
-                            href="javascript:;"
+                            href=`/${prefixAdmin}/products-category/changeStatus/inactive/${item.id}`
                             class="badge badge-success"
                             data-status="active"
                             data-id=item.id
@@ -31,7 +43,7 @@ mixin table-tree(records, level = 1)
                         ) Hoạt động
                     else
                         a(
-                            href="javascript:;"
+                            href=`/${prefixAdmin}/products-category/changeStatus/active/${item.id}`
                             class="badge badge-danger"
                             data-status="inactive"
                             data-id=item.id

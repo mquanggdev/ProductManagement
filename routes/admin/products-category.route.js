@@ -23,5 +23,9 @@ router.patch(
      validate.createPost,
      controller.editPatch);
 router.get("/detail/:id" , controller.detail);
-router.get("/delete/:id",controller.delete)
+router.get("/delete/:id",controller.delete);
+router.get("/changeStatus/:status/:id" , controller.changeStatus);
+router.patch("/changePosition/:id" , controller.changePosition);
+router.patch("/change-multi" , controller.changeMulti)
+
 module.exports = router

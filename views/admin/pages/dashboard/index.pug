@@ -51,3 +51,9 @@ block main
                     p Số lượng: <b>#{statistic.user.total}</b>
                     p Hoạt động: <b>#{statistic.user.active}</b>
                     p Dừng hoạt động: <b>#{statistic.user.inactive}</b>
+        .col-6
+            .card.mb-4
+                .card-header Các quyền được truy cập
+                .card-body
+                    each permission in role.permissions
+                        p Quyền : <b>#{permission}</b>      

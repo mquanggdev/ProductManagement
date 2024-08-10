@@ -189,7 +189,9 @@ if(listInputPosition.length > 0) {
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    if(data.code == "200"){
+                        window.location.reload();
+                    }
                 })
         })
     })

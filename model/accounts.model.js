@@ -17,7 +17,6 @@ const accountModelSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    deleteAt:Date
 }, {
     timestamps: true // tự động thêm trường createAt và updateAt
 })
