@@ -13,3 +13,18 @@ module.exports = async (req , find) => {
 
     return pagination;
 }
+module.exports.pagination = async (req , find , model) => {
+    const pagination = {
+        currentPage : 1, 
+        limitItems : 4
+      }
+      if(req.query.page){
+        pagination.currentPage = parseInt(req.query.page);
+      }
+      pagination.skip = (pagination.currentPage - 1) * pagination.limitItems
+      const totalProduct = await model.countDocuments(find);
+      const totalPage = Math.ceil(totalProduct / pagination.limitItems);
+      pagination.total = totalPage
+  
+      return pagination
+  }

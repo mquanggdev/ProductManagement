@@ -1,0 +1,16 @@
+mixin trashMixin(name)
+    .row
+        .col-2
+            label(for="checkAllInput" class="btn btn-outline-primary") Chọn tất cả
+        .col-2
+            div(class="mb-3")
+                button(
+                    class="btn btn-outline-success"
+                    link-button=`/${prefixAdmin}/trash/${name}/restore`
+                ) Khôi phục
+        .col-2
+            div(class="mb-3")
+                button(
+                    class="btn btn-outline-danger"
+                    link-button=`/${prefixAdmin}/trash/${name}/deletePermanent`
+                ) Xóa Vĩnh Viễn

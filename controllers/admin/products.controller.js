@@ -286,8 +286,7 @@ module.exports.detail = async (req , res) => {
         const id = req.params.id ;
 
         const product = await Product.findOne({
-        _id:id,
-        deleted:false 
+        _id:id
         })
 
         if(product){

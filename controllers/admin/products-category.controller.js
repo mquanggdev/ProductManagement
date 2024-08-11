@@ -181,8 +181,7 @@ module.exports.editPatch = async (req , res) => {
 module.exports.detail = async (req,res) => {
     const id = req.params.id;
     let find = {
-        _id : id,
-        deleted: false
+        _id : id
     }
     const records = await ProductCategory.findOne(find);
     console.log(records);

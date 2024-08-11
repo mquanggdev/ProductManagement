@@ -1,3 +1,4 @@
+
 // button status
 const listButtonStatus = document.querySelectorAll("[button-status]");
 if (listButtonStatus.length > 0 ){
@@ -313,3 +314,71 @@ if(tablePermission){
     }
 }
 // end phân quyền permission
+
+
+
+// trash
+const buttonLinkTrash = document.querySelectorAll("[link-button]")
+if(buttonLinkTrash.length > 0){
+   buttonLinkTrash.forEach(element => {
+    element.addEventListener("click" , () => {
+        const listInputCheckedItem = document.querySelectorAll("input[name = 'checkItem']:checked");
+        const ids = [];
+
+        if(listInputCheckedItem){
+            listInputCheckedItem.forEach(item => {
+                ids.push(item.value);
+            })
+        }
+        if(ids.length > 0) {
+            const link = element.getAttribute("link-button");
+            fetch(link , {
+                method: "PATCH",
+                headers: {
+                    "Content-type":"application/json",
+                },
+                body : JSON.stringify(ids) 
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.code == "200"){
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes!"
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.reload() ;
+                                }
+                          });
+                                                   
+                    }
+                })
+        }else{
+            Swal.fire({
+                title: "Custom animation with Animate.css",
+                showClass: {
+                  popup: `
+                    animate__animated
+                    animate__fadeInUp
+                    animate__faster
+                  `
+                },
+                hideClass: {
+                  popup: `
+                    animate__animated
+                    animate__fadeOutDown
+                    animate__faster
+                  `
+                }
+              });
+        }
+        
+    })
+   }) 
+}
+// end trash
