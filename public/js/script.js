@@ -16,3 +16,12 @@ if(tableCart) {
 }
 
 // End cập nhất số lượng sản phẩm trong giỏ hàng
+// show popup
+const show_alert = document.querySelector("[show-alert]");
+if ( show_alert){
+    let time = parseInt(show_alert.getAttribute("show-alert")) || 3000;
+    setTimeout(() => {
+        show_alert.classList.add("hidden");
+    },time);
+}
+// end show popup
