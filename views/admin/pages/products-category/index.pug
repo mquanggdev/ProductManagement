@@ -29,18 +29,20 @@ block main
                 .card-header Chuyển Trạng Thái
                 .card-body 
                     +box-mixin-actions(`/${prefixAdmin}/products-category/change-multi`)
-
+        if(role.permissions.includes("products-category_create"))  
+            .card.mb-3
+                .card-body
+                    .row
+                        .col-8
+                        .col-4.text-right.mb-3
+                            if(role.permissions.includes("products-category_create"))
+                                a(
+                                    href=`/${prefixAdmin}/products-category/create`
+                                    class="btn btn-outline-success"
+                                ) + Thêm mới
         .card.mb-3
             .card-header Danh sách
             .card-body
-                .row
-                    .col-8
-                    .col-4.text-right.mb-3
-                        if(role.permissions.includes("products-category_create"))
-                            a(
-                                href=`/${prefixAdmin}/products-category/create`
-                                class="btn btn-outline-success"
-                            ) + Thêm mới
                 table(
                     class="table table-hover table-sm"
                 )

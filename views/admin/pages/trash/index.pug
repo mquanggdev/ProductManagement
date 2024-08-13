@@ -6,14 +6,15 @@ include ../../mixin/box-actions.pug
 include ../../mixin/moment.pug
 
 block main
-    h1 Thùng Rác
-    .row.mt-5
-        each record in arrayRecords
-            .col-sm-6
-                .card.mb-3
-                    .card-body
-                        h5.card-title #{record.name}
-                        p.card-text Hiện đang có #{record.count} bản bị xóa
-                        a.btn.btn-primary(href=record.link) Đi tới
+    if(role.permissions.includes("trash_view"))
+        h1 Thùng Rác
+        .row.mt-5
+            each record in arrayRecords
+                .col-sm-6
+                    .card.mb-3
+                        .card-body
+                            h5.card-title #{record.name}
+                            p.card-text Hiện đang có #{record.count} bản bị xóa
+                            a.btn.btn-primary(href=record.link) Đi tới
     
                 

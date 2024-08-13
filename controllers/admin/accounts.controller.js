@@ -7,6 +7,8 @@ var md5 = require('md5');
 
 //GET /admin/accounts
 module.exports.index = async (req,res) => {
+  if(res.locals.role.permissions.includes("accounts_view")){
+
   const filterStatus = [
         {
             label: "Tất cả" ,
@@ -82,9 +84,13 @@ module.exports.index = async (req,res) => {
         filterStatus: filterStatus,
         pagination:pagination
     });
+  }else{
+    return;
+  }
 }
 //GET /admin/accounts/create
 module.exports.create = async (req,res) => {
+  if(res.locals.role.permissions.includes("accounts_create")){
     const roles = await Role.find({
         deleted: false,
       });
@@ -93,10 +99,14 @@ module.exports.create = async (req,res) => {
         pageTitle: "Thêm mới tài khoản",
         roles: roles
       });
+    }else{
+      return;
+    }
 }
 
 //Post /admin/accounts/create
 module.exports.createPost = async (req,res) => {
+  if(res.locals.role.permissions.includes("accounts_create")){
     const password = req.body.password ;
     req.body.password = md5(password);
     req.body.token = generateHelper.generateRandomString(30);
@@ -105,10 +115,14 @@ module.exports.createPost = async (req,res) => {
     await account.save();
     req.flash("success","Thêm quyền thành công")
     res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
+  }else{
+    return;
+  }
 }
 
 //GET /admin/account/edit/:id
 module.exports.edit = async (req,res) => {
+  if(res.locals.role.permissions.includes("accounts_edit")){
     try {
         const find = {
           _id: req.params.id,
@@ -129,10 +143,14 @@ module.exports.edit = async (req,res) => {
       } catch (error) {
         res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
       }
+    }else{
+      return;
+    }
 }
 
 //GET /admin/account/edit/:id
 module.exports.editPatch = async (req,res) => {
+  if(res.locals.role.permissions.includes("accounts_edit")){
     try {
         if(req.body.password) {
           req.body.password = md5(req.body.password);
@@ -150,10 +168,15 @@ module.exports.editPatch = async (req,res) => {
       } catch (error) {
         res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
       }
+    }
+    else{
+      return;
+    }
 }
 
 //[get]/admin/accounts/detail/:id
 module.exports.detail = async (req , res) => {
+  if(res.locals.role.permissions.includes("accounts_view")){
     try{
         const id = req.params.id ;
 
@@ -172,10 +195,13 @@ module.exports.detail = async (req , res) => {
         }
     }catch(e){
         res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
+    }}else{
+      return;
     }
 }
 // [get]/admin/accounts/delete/:id
 module.exports.delete = async (req , res) => {
+  if(res.locals.role.permissions.includes("accounts_delete")){
     try{
         const id = req.params.id;
         await Account.updateOne({
@@ -190,10 +216,15 @@ module.exports.delete = async (req , res) => {
         req.flash("error ", "Sửa thất bại")
         console.log(e);
     }
+  }
+    else{
+      return;
+    }
     
 }
 //[Patch] /admin/accounts/change-multi
 module.exports.changeMulti = async (req , res) => {
+  if(res.locals.role.permissions.includes("accounts_edit")){
   const {status,ids} = req.body;
   switch (status) {
       case "active":
@@ -218,8 +249,13 @@ module.exports.changeMulti = async (req , res) => {
       code : 200
   });
 }
+  else{
+    return;
+  }
+}
 //[get] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req , res) => {
+  if(res.locals.role.permissions.includes("accounts_edit")){
   try {
     const {id,status} = req.params;
     
@@ -235,5 +271,8 @@ module.exports.changeStatus = async (req , res) => {
     console.log(error);
     
   }
+}else{
+  return;
+}
     
 }

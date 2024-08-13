@@ -9,6 +9,7 @@ const createTreeHelper = require("../../helper/createTree.helper");
 
 // [GET] /admin/trash
 module.exports.index = async (req ,res) => {
+    if(res.locals.role.permissions.includes("trash_view")){
     const productCount = await Product.countDocuments({
         deleted:true
     })
@@ -58,9 +59,11 @@ module.exports.index = async (req ,res) => {
         pageTitle: "Trang thùng rác",
         arrayRecords : arrayRecords
     });
+}else{return;}
 }
 // [GET] /admin/trash/products
 module.exports.products = async (req ,res) => {
+    if(res.locals.role.permissions.includes("trash_view")){
     const products = await Product.find({
         deleted : true
     })
@@ -85,9 +88,13 @@ module.exports.products = async (req ,res) => {
         pagination : pagination,
         nameRecord : "products"
     }) ;
+}else{
+    return;
+}
 }
 // [GET] /admin/trash/products-category
 module.exports.productsCategory = async (req ,res) => {
+    if(res.locals.role.permissions.includes("trash_view")){
     const productsCategory = await ProductCategory.find({
         deleted : true
     })
@@ -113,8 +120,13 @@ module.exports.productsCategory = async (req ,res) => {
         nameRecord : "products-category"
     }) ;
 }
+    else{
+        return;
+    }
+}
 // [GET] /admin/trash/roles
 module.exports.roles = async (req ,res) => {
+    if(res.locals.role.permissions.includes("trash_view")){
     const roles = await Role.find({
         deleted : true
     })
@@ -127,9 +139,13 @@ module.exports.roles = async (req ,res) => {
         pagination : pagination,
         nameRecord : "roles"
     }) ;
+}else{
+    return;
+}
 }
 // [GET] /admin/trash/accounts
 module.exports.accounts = async (req ,res) => {
+    if(res.locals.role.permissions.includes("trash_view")){
     const accounts = await Account.find({
         deleted : true
     })
@@ -149,9 +165,11 @@ module.exports.accounts = async (req ,res) => {
         pagination : pagination,
         nameRecord : "accounts"
     }) ;
+}else{return;}
 }
 // [GET] /admin/trash/users
 module.exports.users = async (req ,res) => {
+    if(res.locals.role.permissions.includes("trash_view")){
        const users = await User.find({
         deleted : true
     })
@@ -164,10 +182,12 @@ module.exports.users = async (req ,res) => {
         pagination : pagination,
         nameRecord : "users"
     }) ;
+}else{return;}
 }
 
 // [PATCH] /admin/trash/product/restore
 module.exports.restore = async (req ,res) => {
+    if(res.locals.role.permissions.includes("trash_restore")){
     const ids = req.body ;
     const nameRecord = req.params.record;
     switch (nameRecord) {
@@ -214,9 +234,13 @@ module.exports.restore = async (req ,res) => {
     res.json({
         code:"200"
     })
+}else{
+    return;
 }
-// [PATCH] /admin/trash/product/restore
+}
+// [PATCH] /admin/trash/product/deletePermanent
 module.exports.deletePermanent = async (req ,res) => {
+    if(res.locals.role.permissions.includes("trash_deletePermanent")){
     const ids = req.body ;
     const nameRecord = req.params.record;
     switch (nameRecord) {
@@ -252,5 +276,8 @@ module.exports.deletePermanent = async (req ,res) => {
    res.json({
        code:"200"
    })
+}else{
+    return;
+}
 }
 

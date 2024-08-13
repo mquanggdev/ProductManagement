@@ -6,6 +6,9 @@ const createTreeHelper = require("../../helper/createTree.helper");
 
 //GET /admin/products-category
 module.exports.index = async (req,res) => {
+    if(res.locals.role.permissions.includes("products-category_view")){
+
+    
     const filterStatus = [
         {
             label: "Tất cả" ,
@@ -85,10 +88,14 @@ module.exports.index = async (req,res) => {
     }else{
         res.redirect("back");
     }
+}else{
+    return;
+}
     
 }
 //GET /admin/products-category/create
 module.exports.create = async (req,res) => {
+    if(res.locals.role.permissions.includes("products-category_create")){
     let find = {
         deleted: false
     }
@@ -98,10 +105,14 @@ module.exports.create = async (req,res) => {
         pageTitle : "Thêm danh mục sản phẩm " ,
         records : newRecords
     });
+}else{
+    return
+}
 }
 
 // [post]/admin/products-category/createPost
 module.exports.createPost = async (req , res) => {
+    if(res.locals.role.permissions.includes("products-category_create")){
     if (req.body.position){
         req.body.position = parseInt(req.body.position);
     }
@@ -117,9 +128,13 @@ module.exports.createPost = async (req , res) => {
     await newProductCategory.save();
     req.flash("success","Thêm danh mục thành công")
     res.redirect(`/${systemConfig.prefixAdmin}/products-category`);
+}else{
+    return;
+}
 }
 // [get]/admin/products-category/edit/:id
 module.exports.edit = async (req , res) => {
+    if(res.locals.role.permissions.includes("products-category_edit")){
     try{
         const id = req.params.id ;
 
@@ -146,10 +161,14 @@ module.exports.edit = async (req , res) => {
     }catch(e){
         res.redirect(`/${systemConfig.prefixAdmin}/products-category`);
     }
+}else{
+    return;
+}
 }
 
 // [patch]/admin/products-category/edit:id
 module.exports.editPatch = async (req , res) => {
+    if(res.locals.role.permissions.includes("products-category_edit")){
     try{
         const id = req.params.id;
         if (req.body.position){
@@ -174,11 +193,15 @@ module.exports.editPatch = async (req , res) => {
         req.flash("error ", "Sửa thất bại")
         console.log(e);
     }
+    }else{
+        return;
+    }
     
 }
 
 //[get]/admin/products-category/detail/:id
 module.exports.detail = async (req,res) => {
+    if(res.locals.role.permissions.includes("products-category_view")){
     const id = req.params.id;
     let find = {
         _id : id
@@ -198,11 +221,15 @@ module.exports.detail = async (req,res) => {
         records : records,
         titleParent:titleParent
     });
+}else{
+    return ;
+}
     
 }
 
 // [get]/admin/products-category/delete/:id
 module.exports.delete = async (req , res) => {
+    if(res.locals.role.permissions.includes("products-category_delete")){
     try{
         const id = req.params.id;
         await ProductCategory.updateOne({
@@ -221,11 +248,15 @@ module.exports.delete = async (req , res) => {
         req.flash("error ", "Sửa thất bại")
         console.log(e);
     }
+}else{
+    return;
+}
     
 }
 
 // Get /admin/products-category/changeStatus/:status/:id
 module.exports.changeStatus = async (req , res) => {
+    if(res.locals.role.permissions.includes("products-category_edit")){
     try {
         const status = req.params.status ;
         const id = req.params.id ;
@@ -245,10 +276,13 @@ module.exports.changeStatus = async (req , res) => {
         req.flash("error" , "Không tìm thấy danh mục sản phẩm!");
         res.redirect("/");
     }
-    
+}else{
+    return;
+}
 }
 // Get /admin/products-category/changePosition/:id
 module.exports.changePosition = async (req , res) => {
+    if(res.locals.role.permissions.includes("products-category_edit")){
     try {
         const id = req.params.id ;
         const position = req.body.position
@@ -269,10 +303,13 @@ module.exports.changePosition = async (req , res) => {
         req.flash("error" , "Không tìm thấy danh mục sản phẩm!");
         res.redirect("/");
     }
-    
+}else{
+    return;
+}
 }
 //patch admin/products-category/change-multi
 module.exports.changeMulti = async (req , res) => {
+    if(res.locals.role.permissions.includes("products-category_edit") && res.locals.role.permissions.includes("products-category_delete") ){
     const {status,ids} = req.body ;
     switch (status) {
         case "active":
@@ -305,4 +342,7 @@ module.exports.changeMulti = async (req , res) => {
     res.json({
         code : 200
     });
+}else{
+    return;
+}
 }

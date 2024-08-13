@@ -1,27 +1,28 @@
 extends ../../layout/default.pug
 block main
-    h1 Trang Tổng Quan
-    .row.mt-4
-        .col-12
-            .card.mb-4
-                .card-header Thông tin tài khoản
-                .card-body
-                    if(account.avatar)
-                        img(
-                        src=account.avatar
-                        style="height: 100px;margin-bottom: 15px;"
-                        )
-                    if(account.fullname)
-                        p Họ tên: <b>#{account.fullname}</b>
-                    if(account.email)
-                        p Email: <b>#{account.email}</b>
-                    if(account.phone)
-                        p Số điện thoại: <b>#{account.phone}</b>
-                    if(role.title)
-                        p Phân quyền: <b>#{role.title}</b>
-        .col-6
-            .card.mb-4
-                .card-header Các quyền được truy cập
-                .card-body
-                    each permission in role.permissions
-                        p Quyền : <b>#{permission}</b>      
+    if(role.permissions.includes("accounts_view"))
+        h1 Trang Tổng Quan
+        .row.mt-4
+            .col-12
+                .card.mb-4
+                    .card-header Thông tin tài khoản
+                    .card-body
+                        if(account.avatar)
+                            img(
+                            src=account.avatar
+                            style="height: 100px;margin-bottom: 15px;"
+                            )
+                        if(account.fullname)
+                            p Họ tên: <b>#{account.fullname}</b>
+                        if(account.email)
+                            p Email: <b>#{account.email}</b>
+                        if(account.phone)
+                            p Số điện thoại: <b>#{account.phone}</b>
+                        if(role.title)
+                            p Phân quyền: <b>#{role.title}</b>
+            .col-6
+                .card.mb-4
+                    .card-header Các quyền được truy cập
+                    .card-body
+                        each permission in role.permissions
+                            p Quyền : <b>#{permission}</b>      

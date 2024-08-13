@@ -3,6 +3,8 @@ const systemConfig = require("../../config/system");
 
 //GET /admin/roles
 module.exports.index = async (req,res) => {
+if(res.locals.role.permissions.includes("roles_view")){
+
     const records = await Role.find({
         deleted:false
     })
@@ -10,10 +12,14 @@ module.exports.index = async (req,res) => {
         pageTitle : "Trang Nhóm Quyền " , 
         records:records,
     });
+}else{
+    return;
+}
 }
 
 //GET /admin/roles/permissions
 module.exports.indexPermissions = async (req,res) => {
+    if(res.locals.role.permissions.includes("roles_permissions")){
     const records = await Role.find({
         deleted:false
     })
@@ -21,10 +27,14 @@ module.exports.indexPermissions = async (req,res) => {
         pageTitle : "Trang Phân Quyền " , 
         records:records,
     });
+}else{
+    return;
+}
 }
 
 //Patch /admin/roles/permission
 module.exports.indexPermissionsPatch = async (req,res) => {
+    if(res.locals.role.permissions.includes("roles_permissions")){
     try {
         const roles = JSON.parse(req.body.roles);
         for(var role of roles){
@@ -40,25 +50,37 @@ module.exports.indexPermissionsPatch = async (req,res) => {
     } catch (error) {
         res.redirect(`/${systemConfig.prefixAdmin}/roles/permissions`);
     }
+}else{
+    return;
+}
 }
 
 //GET /admin/roles/create
 module.exports.create = async (req,res) => {
+    if(res.locals.role.permissions.includes("roles_create")){
     res.render("admin/pages/roles/create.pug" , {
         pageTitle : "Trang Tạo Quyền " , 
     });
+}else{
+    return;
+}
 }
 
 //Post /admin/roles/create
 module.exports.createPost = async (req,res) => {
+    if(res.locals.role.permissions.includes("roles_create")){
     const newRole = new Role(req.body);
     await newRole.save();
     req.flash("success","Thêm quyền thành công")
     res.redirect(`/${systemConfig.prefixAdmin}/roles`);
+    }else{
+        return;
+    }
 }
 
 //GET /admin/roles/edit/:id
 module.exports.edit = async (req,res) => {
+    if(res.locals.role.permissions.includes("roles_edit")){
     try {
         const id = req.params.id ;
         const records = await Role.findOne({
@@ -72,10 +94,14 @@ module.exports.edit = async (req,res) => {
     } catch (error) {
         res.redirect(`/${systemConfig.prefixAdmin}/roles`);
     }
+}else{
+    return;
+}
 }
 
 //GET /admin/roles/edit/:id
 module.exports.editPatch = async (req,res) => {
+    if(res.locals.role.permissions.includes("roles_edit")){
     try {
         const id = req.params.id ;
         await Role.updateOne({
@@ -86,10 +112,14 @@ module.exports.editPatch = async (req,res) => {
     } catch (error) {
         res.redirect(`/${systemConfig.prefixAdmin}/roles`);
     }
+}else{
+    return;
+}
 }
 
 //[get]/admin/detail/:id
 module.exports.detail = async (req , res) => {
+    if(res.locals.role.permissions.includes("roles_view")){
     try{
         const id = req.params.id ;
 
@@ -109,10 +139,14 @@ module.exports.detail = async (req , res) => {
         }
     }catch(e){
         res.redirect(`/${systemConfig.prefixAdmin}/roles`);
+    }}
+    else{
+        return ;
     }
 }
 // [get]/admin/roles/delete/:id
 module.exports.delete = async (req , res) => {
+    if(res.locals.role.permissions.includes("roles_delete")){
     try{
         const id = req.params.id;
         await Role.updateOne({
@@ -127,6 +161,8 @@ module.exports.delete = async (req , res) => {
         req.flash("error ", "Sửa thất bại")
         console.log(e);
     }
-    
+}else{
+    return;
+}
 }
 

@@ -7,34 +7,35 @@ include ../../mixin/sort.pug
 include ../../mixin/moment.pug
 include ./mixinPage.pug
 block main
-    h1(class="mb-4") #{pageTitle}
-    +trashMixin(nameRecord)
-    table.table.table-hover.table-sm
-          thead
-            tr
-              th
-                input(
-                  type="checkbox"
-                  name="checkAll"
-                  id="checkAllInput"
-                )
-              th STT
-              th Nhóm quyền
-              th Mô tả ngắn
-              th Hành động
-
-          tbody
-            each item , index in records
+  if(res.locals.role.permissions.includes("trash_view"))
+      h1(class="mb-4") #{pageTitle}
+      +trashMixin(nameRecord)
+      table.table.table-hover.table-sm
+            thead
               tr
-                td
-                  input(type="checkbox" name="checkItem"  value= item.id) 
-                td #{pagination.limitItems * (pagination.currentPage - 1) + index + 1}
-                td #{item.title}
-                td #{item.description}
-                td
-                    a(
-                      class="btn btn-info btn-sm mr-1"
-                      href=`/${prefixAdmin}/roles/detail/${item.id}`
-                    ) Chi tiết
-    +pagination(pagination)
-    
+                th
+                  input(
+                    type="checkbox"
+                    name="checkAll"
+                    id="checkAllInput"
+                  )
+                th STT
+                th Nhóm quyền
+                th Mô tả ngắn
+                th Hành động
+
+            tbody
+              each item , index in records
+                tr
+                  td
+                    input(type="checkbox" name="checkItem"  value= item.id) 
+                  td #{pagination.limitItems * (pagination.currentPage - 1) + index + 1}
+                  td #{item.title}
+                  td #{item.description}
+                  td
+                      a(
+                        class="btn btn-info btn-sm mr-1"
+                        href=`/${prefixAdmin}/roles/detail/${item.id}`
+                      ) Chi tiết
+      +pagination(pagination)
+      
