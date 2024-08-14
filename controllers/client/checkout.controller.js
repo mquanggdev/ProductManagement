@@ -32,7 +32,6 @@ module.exports.index = async (req, res) => {
 
 // [Post] /checkout/order
 module.exports.orderPost = async (req , res) => {
-    console.log(req.body);
     const userInfo = req.body ;
     const orderData = {
         userInfo :userInfo,
@@ -49,7 +48,7 @@ module.exports.orderPost = async (req , res) => {
             _id : product.productId
         })
         orderData.products.push({
-            productId: product.id,
+            productId: product.productId,
             price :productInfo.price,
             quantity: product.quantity,
             discountPercentage : productInfo.discountPercentage

@@ -9,6 +9,7 @@ const systemConfig = require("../../config/system");
 const authMiddleware = require("../../middleware/admin/authens.middleware");
 const settingRoute = require("./setting.route");
 const trashsRoute = require("./trash.route");
+const orderRoute = require("./orders.route");
 
 module.exports = (app) =>{
     const PORT = systemConfig.prefixAdmin;
@@ -21,4 +22,5 @@ module.exports = (app) =>{
     app.use(`/${PORT}` + "/profiles" ,authMiddleware.requireAuth, profileRouter)
     app.use(`/${PORT}` + "/settings",authMiddleware.requireAuth,settingRoute);
     app.use(`/${PORT}` + "/trash",authMiddleware.requireAuth,trashsRoute);
+    app.use(`/${PORT}` + "/orders",authMiddleware.requireAuth,orderRoute);
 } 

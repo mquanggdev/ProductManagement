@@ -13,7 +13,16 @@ const orderSchema = new mongoose.Schema({
             quantity: Number,
             discountPercentage : Number ,
         }
-    ]
+    ],
+    status:{
+        type : String ,
+        default : "intransit"
+    },
+    paid: {
+        type : String , 
+        default : "unpaid"
+    },
+
 }, {
   timestamps: true
 });

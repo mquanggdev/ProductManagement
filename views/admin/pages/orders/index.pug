@@ -1,0 +1,71 @@
+extends ../../layout/default.pug
+include ../../mixin/pagination.pug
+include ../../mixin/box-actions.pug
+include ../../mixin/sort.pug
+include ../../mixin/moment.pug
+block main
+    h1 #{pageTitle}
+
+    table.table.table-hover.table-sm
+        thead
+            tr
+                th
+                    input(
+                        type="checkbox"
+                        name="checkAll"
+                    )
+                th STT
+                th Người nhận
+                th Số điện thoại
+                th Địa Chỉ
+                th Số lượng
+                th Tổng tiền
+                th Tình trạng đơn
+                th Thanh toán
+                th Hành động
+
+        tbody
+            each item , index in orders
+                tr
+                    td
+                        input(type="checkbox" name="checkItem"  value= item.id) 
+                    td #{pagination.limitItems * (pagination.currentPage - 1) + index + 1}
+                    td #{item.userInfo.fullname}
+                    td #{item.userInfo.phone}
+                    td #{item.userInfo.address}
+                    td #{item.quantity} Sản phẩm
+                    th #{item.totalPrice}$
+                    td
+                        if(item.status == "intransit")
+                            button(
+                            link =`#`
+                            class="badge badge-success"
+                            button-change-status) Đang vận chuyển
+                        else
+                            button(
+                            link =`#` 
+                            class="badge badge-danger"
+                            button-change-status) Đã giao
+                    td
+                        if(item.paid == "unpaid")
+                            button(
+                            link =`#`
+                            class="badge badge-success"
+                            button-change-status) Chưa thanh toán
+                        else
+                            button(
+                            link =`#` 
+                            class="badge badge-danger"
+                            button-change-status) Đã thanh toán
+                    td
+                        a(
+                            class="btn btn-info btn-sm mr-1"
+                            href=`#`
+                        ) Chi tiết
+                        a(
+                            class="btn btn-warning btn-sm"
+                            href=`#`) Sửa
+                        button(
+                            class="btn btn-danger btn-sm ml-1"
+                            button-delete = `#`) Xóa
+    +pagination(pagination)
