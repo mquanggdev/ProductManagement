@@ -38,12 +38,12 @@ block main
                     td
                         if(item.status == "intransit")
                             button(
-                            link =`#`
+                            link =`/${prefixAdmin}/orders/changeTransit/transit/${item.id}`
                             class="badge badge-success"
                             button-change-status) Đang vận chuyển
                         else
                             button(
-                            link =`#` 
+                            link =`/${prefixAdmin}/orders/changeTransit/intransit/${item.id}` 
                             class="badge badge-danger"
                             button-change-status) Đã giao
                     td
@@ -60,7 +60,7 @@ block main
                     td
                         a(
                             class="btn btn-info btn-sm mr-1"
-                            href=`#`
+                            href=`/${prefixAdmin}/orders/detail/${item.id}`
                         ) Chi tiết
                         a(
                             class="btn btn-warning btn-sm"

@@ -13,6 +13,7 @@ module.exports.index = async (req , res) => {
     
     for (const item of orders) {
         const order = {} ;
+        order.id = item.id;
         order.userInfo = item.userInfo ;
         let quantity = 0 ;
         let totalPrice = 0 ;
@@ -35,5 +36,42 @@ module.exports.index = async (req , res) => {
         pageTitle : "Danh sách đơn hàng đã đặt" , 
         orders : orderInfo,
         pagination: pagination
+    });
+}
+
+
+module.exports.changeTransit = async (req , res) => {
+    const {status,id} = req.params ;
+     await Order.updateOne({
+        _id : id,
+     } ,
+     {status : status}
+    );
+    req.flash("success" , "Thay đổi trạng thái thành công!");
+    res.json({
+        code: 200
+    })
+}
+
+module.exports.detail = async (req , res) => {
+    const id = req.params.id ;
+    const order = await Order.findOne({
+        _id : id
+    });
+    let products = [] ;
+    for(const item of order.products){
+        let totalPrice = 0 ;
+        const productInfo = await Product.findOne({
+            _id : item.productId
+        });
+        productInfo.quantity = item.quantity ;
+        totalPrice += (item.quantity * item.price) * (1 - item.discountPercentage/100) ;
+        productInfo.totalPrice = totalPrice;
+        products.push(productInfo);
+    }
+    
+    res.render(`admin/pages/orders/detail.pug` , {
+        pageTitle : "Chi tiết đơn hàng" , 
+        products : products 
     });
 }

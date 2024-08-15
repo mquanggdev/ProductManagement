@@ -1,0 +1,32 @@
+extends ../../layout/default.pug
+block main
+    .card.mb-3
+      .card-header Danh sách
+      .card-body
+        table.table.table-hover.table-sm
+          thead
+            tr
+              th STT
+              th Hình ảnh
+              th Tiêu đề
+              th Giá gốc
+              th Giảm
+              th Số lượng
+              th Thành tiền
+
+          tbody
+            each item , index in products
+              tr
+                td #{index+1}
+                td
+                  img(
+                    src= item.thumbnail
+                    alt= item.title
+                    width="80px"
+                    height="auto"
+                  )
+                td #{item.title}
+                td #{item.price}$
+                td #{item.discountPercentage}%
+                td #{item.quantity} Sản phẩm
+                td #{item.totalPrice}$
